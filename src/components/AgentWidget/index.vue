@@ -11,7 +11,7 @@
           <i class="el-icon-close agent-widget-close" @click.stop="closeAgentWidget" />
         </div>
         <div class="agent-widget-body">
-          <div class="agent-message-list" ref="agentScrollArea">
+          <div ref="agentScrollArea" class="agent-message-list">
             <div
               v-for="(msg, index) in agentWidget.messages"
               :key="index"
@@ -50,6 +50,9 @@
 </template>
 
 <script>
+import { EventSourcePolyfill } from 'event-source-polyfill'
+import { getToken } from '@/utils/auth'
+
 export default {
   name: 'AgentWidget',
   props: {
@@ -136,7 +139,16 @@ export default {
       const url = `${baseUrl}/agent/chat/stream?question=${encodeURIComponent(content)}`
 
       try {
-        const es = new EventSource(url)
+        const token = getToken()
+        const headers = token
+          ? {
+            Authorization: `${token}`
+          }
+          : {}
+        const es = new EventSourcePolyfill(url, {
+          headers,
+          withCredentials: true
+        })
         this.agentWidget.eventSource = es
         let firstChunk = true
 
@@ -300,5 +312,4 @@ export default {
   text-align: right;
 }
 </style>
-
 
