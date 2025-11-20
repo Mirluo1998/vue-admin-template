@@ -8,11 +8,11 @@ export function getList(params) {
   })
 }
 
-export function add(params) {
+export function add(data) {
   return request({
     url: '/document/document_add',
     method: 'post',
-    params
+    data
   })
 }
 

@@ -79,6 +79,7 @@
             class="upload-demo"
             drag
             :action="uploadConfig.url"
+            :headers="uploadConfig.headers"
             :on-success="handleUploadSuccess"
             multiple
           >
@@ -125,7 +126,10 @@ export default {
       },
       title: '添加知识库',
       uploadConfig: {
-        url: process.env.VUE_APP_BASE_API + '/document/upload'
+        url: process.env.VUE_APP_BASE_API + '/document/upload',
+        headers: {
+          Authorization: this.$store.getters.token
+        }
       },
       queryParams: {
         file_name: null,
