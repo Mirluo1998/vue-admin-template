@@ -74,6 +74,16 @@ export const constantRoutes = [
       meta: { title: 'User', icon: 'nested', affix: true }
     }]
   },
+  {
+    path: '/user-order',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'UserOrder',
+      component: () => import('@/views/user-order/index'),
+      meta: { title: '用户订单', icon: 'form', affix: true }
+    }]
+  },
 
   {
     path: '/example',
